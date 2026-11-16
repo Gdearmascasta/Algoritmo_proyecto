@@ -3,6 +3,8 @@
 #include "libro.h"
 
 // ALGORITMO 3: Tabla Hash con encadenamiento (la misma idea de la de usuarios en Python).
+// Paradigma: Compromiso espacio-tiempo (casillas extra a cambio de buscar en O(1)).
+// Para listar usa merge sort: divide y vencerás.
 // casilla = codigo % tamano. Si dos libros caen en la misma casilla, se encadenan
 // en una lista enlazada. Cuando el factor de carga pasa de 0.7, la tabla se duplica.
 

@@ -2,6 +2,7 @@
 #include "libro.h"
 
 // ALGORITMO 2: Árbol AVL (árbol binario de búsqueda AUTO-BALANCEADO).
+// Paradigma: Transformar y vencerás (las rotaciones transforman el árbol en uno balanceado).
 // Igual que el BST, pero después de cada inserción revisa que la diferencia de
 // alturas entre el lado izquierdo y el derecho no pase de 1. Si pasa, rota.
 

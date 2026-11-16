@@ -1,7 +1,20 @@
 CXX ?= g++
+CXXFLAGS = -std=c++17 -O2 -Wall
+COMUN = $(wildcard comun/*.h)
 
-comparar: src/main.cpp src/libro.h src/arbol_bst.h src/arbol_avl.h src/tabla_hash.h
-	$(CXX) -std=c++17 -O2 -Wall -o comparar src/main.cpp
+todo: 1_comparar_todas/comparar 2_bst/app_bst 3_avl/app_avl 4_hash/app_hash
+
+1_comparar_todas/comparar: 1_comparar_todas/main.cpp $(COMUN)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+2_bst/app_bst: 2_bst/main.cpp $(COMUN)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+3_avl/app_avl: 3_avl/main.cpp $(COMUN)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+4_hash/app_hash: 4_hash/main.cpp $(COMUN)
+	$(CXX) $(CXXFLAGS) -o $@ $<
 
 clean:
-	rm -f comparar
+	rm -f 1_comparar_todas/comparar 2_bst/app_bst 3_avl/app_avl 4_hash/app_hash

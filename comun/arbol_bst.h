@@ -2,6 +2,7 @@
 #include "libro.h"
 
 // ALGORITMO 1: Árbol Binario de Búsqueda SIN balancear (el mismo de la app en Python).
+// Paradigma: Reducir y vencerás (cada comparación descarta un subárbol).
 // Clave = código del libro. Menores a la izquierda, mayores a la derecha.
 
 class NodoArbol {

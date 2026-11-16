@@ -1,0 +1,7 @@
+1_comparar_todas/comparar
+2_bst/app_bst
+3_avl/app_avl
+4_hash/app_hash
+*.exe
+*.obj
+.atl/
