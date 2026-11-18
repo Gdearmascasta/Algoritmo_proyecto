@@ -92,7 +92,7 @@ struct Resultado {
     double kb_estructura = 0;    // Memoria que ocupa la estructura ya construida
     double bytes_por_libro = 0;  // kb_estructura / N (incluye el libro guardado)
     double kb_pico_insertar = 0; // Máximo de memoria mientras se insertaba
-    double kb_extra_listar = 0;  // Memoria adicional que necesita listar en orden
+    double kb_extra_listar = 0;  // Búfer extra al listar, NO incluye arreglo de salida común
     string forma;
 };
 
@@ -105,6 +105,7 @@ Resultado medir(const Datos& datos, int repeticiones) {
     Resultado r;
     int n = datos.libros.size();
     double busquedas = datos.existentes.size();
+    // Arreglo común de salida: 8N bytes en el entorno de 64 bits; fuera de "extra listar".
     Libro** lista = new Libro*[n];
 
     for (int rep = 0; rep < repeticiones; rep++) {

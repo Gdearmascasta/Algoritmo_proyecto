@@ -2,7 +2,7 @@
 
 Mismo problema, tres soluciones: **guardar N libros y buscarlos por código** (y poder listarlos en orden).
 
-Hay **cuatro programas**: uno que compara las tres soluciones a la vez y tres aplicaciones individuales, una por solución, cada una con un paradigma distinto.
+Hay **cuatro ejecutables**: uno que compara las tres soluciones y tres aplicaciones individuales, una por solución. Las tres aplicaciones se distinguen por su **estrategia de diseño algorítmico**, no por un paradigma del lenguaje C++ (que es el mismo en las tres).
 
 ```
 comparacion_libros/
@@ -33,7 +33,17 @@ Cada carpeta de programa tiene su `main.cpp`, su `ejecutar.sh` (Linux/macOS) y s
 | AVL | **Transformar y vencerás**: tras cada inserción las rotaciones transforman el árbol en uno balanceado | Árbol AVL, recursión (inserción con rebalanceo, inorden), rotaciones, búsqueda binaria |
 | Tabla hash | **Compromiso espacio-tiempo**: gasta memoria en casillas para buscar en O(1); para listar usa merge sort (**divide y vencerás**) | Arreglo dinámico de casillas, listas enlazadas, función hash, merge sort recursivo |
 
-La clasificación de paradigmas sigue a Levitin, *Introduction to the Design and Analysis of Algorithms*.
+Esta clasificación de estrategias se sustenta en Levitin, *Introduction to the Design and Analysis of Algorithms* (reducir y vencerás para la búsqueda del BST, transformar y vencerás para el balanceo del AVL y compromiso espacio-tiempo para la hash). **Precisiones:** BST y AVL comparten el procedimiento de búsqueda; el AVL se diferencia por el rebalanceo con rotaciones tras insertar. La hash utiliza, además, divide y vencerás al listar mediante merge sort. La clasificación no implica tres paradigmas de lenguaje distintos ni elimina la posibilidad de una interpretación más estricta del requisito docente.
+
+## Integrantes y entrega
+
+- Germán Eduardo De Armas Castaño, T00068765
+- Ángel Luis Vega Rodríguez, T00068186
+- Sara Bastidas Triana, T00081674
+- Daniela Carolina Ortiz Las Calles, T00070793
+
+**Informe oficial:** `Informe_comparacion_estructuras.pdf` (9 páginas, PDF final actualizado por el equipo) y versión editable `Informe_comparacion_estructuras.docx` con la misma bibliografía y contenido académico. La paginación puede diferir entre PDF y Word. El archivo original de consigna `Trabajo Final 2026-2.pdf` se incluye como referencia.
+
 
 ## Compilar y ejecutar
 
@@ -80,7 +90,9 @@ Las gráficas de resultados están en `resultados_graficas.xlsx` y el análisis 
 
 ## Memoria
 
-Se mide reemplazando `new`/`delete` para contar los bytes que cada estructura pide al heap (`comun/memoria.h`). Así no depende del sistema operativo. Incluye los libros guardados. No cuenta la pila de la recursión ni la sobrecarga interna de `malloc`.
+Se mide reemplazando `new`/`delete` para contar los bytes que cada estructura solicita al heap (`comun/memoria.h`). Incluye los libros almacenados; **no es la RAM total del proceso**. No cuenta la pila recursiva, la sobrecarga de `malloc`, los datos de entrada ni otros gastos ajenos a la estructura. Los resultados se refieren a la compilación y representación de tipos de 64 bits usada, y pueden variar entre compiladores/plataformas.
+
+**Búfer de salida común:** `comun/medicion.h` reserva `Libro** lista` de N punteros *antes* de contabilizar la memoria de cada estructura. En 64 bits representa **8N bytes** (156,25 KiB con N = 20 000) para cada alternativa, y no forma parte de la columna «Extra listar». La tabla hash requiere además un segundo búfer de **8N bytes** durante el merge sort; BST y AVL no solicitan ese segundo arreglo. La pila necesaria para el recorrido recursivo de los árboles tampoco se incluye en la columna.
 
 | Columna | Qué es |
 |---|---|
@@ -89,6 +101,12 @@ Se mide reemplazando `new`/`delete` para contar los bytes que cada estructura pi
 | Extra listar | Lo que hace falta además para listar en orden: 0 en los árboles, n punteros en la hash (arreglo auxiliar del merge sort) |
 
 Con N = 10.000 (escenario aleatorio): BST 128 B/libro, AVL 136 B/libro (guarda la altura en cada nodo), hash ≈ 140 B/libro (las casillas vacías también ocupan).
+
+## Hardware declarado y límites de replicación
+
+El informe original identifica un **Intel Core i5-13600K de 13.ª generación**, con Fedora Linux, g++ 16.2 y optimización `-O2`. La ficha técnica oficial del modelo especifica **14 núcleos (6 P + 8 E) y 20 hilos**, no 8 núcleos y 12 hilos. Se ha corregido ese dato en el informe y en las notas del Excel. **No se adjuntó una captura `lscpu` del equipo utilizado**, por lo cual la identidad física del procesador de origen no se ha podido comprobar de forma independiente. Fuente oficial: https://www.intel.com/content/www/us/en/products/sku/230493/intel-core-i513600k-processor-24m-cache-up-to-5-10-ghz/specifications.html
+
+El Excel conserva **las mediciones originales**; no se han sustituido por mediciones de otro equipo. Los tiempos de nanosegundos dependen del hardware y deben interpretarse junto con la complejidad y los nodos revisados.
 
 ## Escenarios
 
@@ -109,6 +127,6 @@ Los casos O(n²) (BST ordenado y hash adversaria) se omiten con N > 20.000 porqu
 | Insertar N libros | O(n log n) / O(n²) | O(n log n) | O(n) / O(n²) |
 | Listar ordenado | O(n) | O(n) | **O(n log n)** (hay que ordenar con merge sort) |
 | Memoria | O(n) | O(n) | O(n + casillas) |
-| Extra al listar | O(h) de pila | O(log n) de pila | O(n) arreglo auxiliar |
+| Recorrido: pila o búfer adicional (además de salida común) | O(h) de pila, no medida | O(log n) de pila, no medida | O(n) arreglo auxiliar en heap |
 
 "Nodos rev." cuenta las comparaciones por búsqueda: no depende de la computadora y es la columna que debe seguir la Big O. Los tiempos en nanosegundos varían un poco entre corridas por la caché del procesador.

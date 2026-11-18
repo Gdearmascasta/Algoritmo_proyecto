@@ -45,6 +45,8 @@ void imprimir_resultado(const InfoApp& info, int n, Escenario escenario, const R
            r.bytes_por_libro);
     printf("    Pico mientras insertaba:   %12.1f KB\n", r.kb_pico_insertar);
     printf("    Extra para listar:         %12.1f KB\n", r.kb_extra_listar);
+    printf("    Nota: se excluye el arreglo de salida comun (N punteros: 8N bytes en 64 bits).\n");
+    printf("    No incluye pila recursiva ni memoria total del proceso.\n");
     if (r.error) printf("\n  [ERROR: la estructura devolvio resultados incorrectos]\n");
 }
 

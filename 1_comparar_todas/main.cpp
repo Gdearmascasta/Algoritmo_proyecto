@@ -85,6 +85,9 @@ void comparar(int n, Escenario escenario, int repeticiones) {
                res[t].bytes_por_libro, res[t].kb_pico_insertar, res[t].kb_extra_listar);
     }
 
+    printf("Nota: Extra listar excluye el arreglo comun de salida (8N bytes en 64 bits).\n");
+    printf("Los KB reflejan asignaciones al heap; no incluyen pila ni RAM total del proceso.\n");
+
     int medidos = 0;
     for (int t = 0; t < 3; t++) if (!res[t].omitido) medidos++;
     if (medidos >= 2) {
